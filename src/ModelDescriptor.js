@@ -15,7 +15,7 @@ export default class ModelDescriptor extends React.Component {
     if (data.items && data.items.length) {
       text += offset + 'items:' + '\r\n';
       for (var i in data.items) {
-        text += '- ' + this.yaml(data.items[i], offset + '  ');
+        text += offset + '- ' + this.yaml(data.items[i], offset + '  ');
       }
     }
 

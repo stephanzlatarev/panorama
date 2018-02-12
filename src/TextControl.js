@@ -2,7 +2,7 @@ import React from 'react';
 
 import {FormControl} from 'react-bootstrap';
 
-export default class ControlClip extends React.Component {
+export default class TextControl extends React.Component {
 
   constructor(props) {
     super(props);
@@ -13,27 +13,26 @@ export default class ControlClip extends React.Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
+  componentWillReceiveProps(props) {
+    this.state.value = props.value;
+    this.setState(this.state);
+  }
+
   handleChange(event) {
     this.setState({
       value: event.target.value
     });
 
-    this.props.selection().clip = event.target.value;
-    this.props.touch(this.props.model);
+    this.props.set(event.target.value);
   }
 
   render() {
-    if (!this.props.selection()) return null;
-
     return (
       <div>
-        Clip:
-
         <FormControl
           type="text"
           style={ { width: '90%' } }
           value={ this.state.value }
-          placeholder="polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)"
           onChange={ this.handleChange }
         />
       </div>

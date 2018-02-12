@@ -2,11 +2,10 @@ import React from 'react';
 
 import {Button} from 'react-bootstrap';
 
-export default class PropertyHandle extends React.Component {
+export default class DimensionControl extends React.Component {
 
   change() {
-    this.props.selection()[this.props.property][this.props.index] += this.props.delta;
-    this.props.touch(this.props.model);
+    this.props.set((this.props.delta) ? this.props.value + this.props.delta : 0);
   }
 
   render() {

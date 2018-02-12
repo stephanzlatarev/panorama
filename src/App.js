@@ -3,11 +3,10 @@ import React from 'react';
 import {Grid, Row, Col} from 'react-bootstrap';
 
 import Viewer from './Viewer';
-import ControlClip from './ControlClip';
 import ControlPointOfView from './ControlPointOfView';
-import ControlPosition from './ControlPosition';
 import ModelDescriptor from './ModelDescriptor';
 import ModelSelector from './ModelSelector';
+import PositionControl from './PositionControl';
 
 export default class App extends React.Component {
 
@@ -16,7 +15,11 @@ export default class App extends React.Component {
 
     this.state = {
       model: null,
-      selection: [],
+      selection: {
+        path: [],
+        property: 'label',
+        type: 'text'
+      },
       coordinates: null,
       eyes: {
         position: [ 300, 300, 0 ],
@@ -35,7 +38,7 @@ export default class App extends React.Component {
       this.setState(this.state);
     }.bind(this));
 
-    $.get("/scenes/mars/mars-colony").done(function(data) {
+    $.get("/scenes/station/pod").done(function(data) {
       this.state.model = require('js-yaml').safeLoad(data);
       this.setState(this.state);
     }.bind(this));
@@ -52,42 +55,62 @@ export default class App extends React.Component {
     });
   }
 
-  select(path) {
-    this.state.selection = path;
+  select(selection) {
+    this.state.selection = selection;
     this.setState(this.state);
   }
 
   getView() {
     var view = this.state.model;
-    var item = this.state.model;
-
-    if (this.state.selection && (this.state.selection.length > 0)) {
-      for (var s in this.state.selection) {
-        if (item != null) {
-          view = item;
-        }
-        item = view.items[this.state.selection[s]];
+    if (this.state.selection.path.length) {
+      for (var s = 0; s < this.state.selection.path.length - 1; s++) {
+        view = view.items[this.state.selection.path[s]];
       }
-
     }
-
     return view;
   }
 
   getSelection() {
+    var item = this.getSelectedItem();
+
+    return function() {
+      return item;
+    };
+  }
+
+  getSelectedItem() {
     var item = this.state.model;
 
-    if (this.state.selection && (this.state.selection.length > 0)) {
-      item = this.getView().items[this.state.selection[this.state.selection.length - 1]];
+    if (this.state.selection.path.length) {
+      item = this.getView().items[this.state.selection.path[this.state.selection.path.length - 1]];
     }
 
     if (!item.size) item.size = [ 100, 100, 100 ];
     if (!item.position) item.position = [ 0, 0, 0 ];
     if (!item.orientation) item.orientation = [ 0, 0, 0 ];
 
-    return function() {
-      return item;
-    };
+    return item;
+  }
+
+  getSelectedProperty() {
+    var item = this.getSelectedItem();
+
+    if (this.state.selection.type === 'text') {
+      return item[this.state.selection.property];
+    } else if (this.state.selection.type === 'dimension') {
+      return item[this.state.selection.property][this.state.selection.axis];
+    }
+  }
+
+  setSelectedProperty(value) {
+    var item = this.getSelectedItem();
+
+    if (this.state.selection.type === 'text') {
+      item[this.state.selection.property] = value;
+    } else if (this.state.selection.type === 'dimension') {
+      item[this.state.selection.property][this.state.selection.axis] = value;
+    }
+    this.setState(this.state);
   }
 
   render() {
@@ -105,28 +128,18 @@ export default class App extends React.Component {
     return (
       <Grid>
         <Row>
-          <Col sm={18}>
+          <Col sm={20}>
             <Viewer model={ scene } />
           </Col>
 
-          <Col sm={6}>
-            <ModelSelector model={ this.state.model } path={ this.state.selection } select={ this.select } />
-          </Col>
-
-          <Col sm={6}>
+          <Col sm={10}>
             <div>Point of view:</div>
             <ControlPointOfView eyes={ this.state.eyes } touch={ this.eyes } />
-  
-            <ControlPosition model={ this.state.model } selection={ selection } property="size" index="0" touch={ this.touch } />
-            <ControlPosition model={ this.state.model } selection={ selection } property="size" index="1" touch={ this.touch } />
-            <ControlPosition model={ this.state.model } selection={ selection } property="size" index="2" touch={ this.touch } />
-            <ControlPosition model={ this.state.model } selection={ selection } property="position" index="0" touch={ this.touch } />
-            <ControlPosition model={ this.state.model } selection={ selection } property="position" index="1" touch={ this.touch } />
-            <ControlPosition model={ this.state.model } selection={ selection } property="position" index="2" touch={ this.touch } />
-            <ControlPosition model={ this.state.model } selection={ selection } property="orientation" index="0" touch={ this.touch } />
-            <ControlPosition model={ this.state.model } selection={ selection } property="orientation" index="1" touch={ this.touch } />
-            <ControlPosition model={ this.state.model } selection={ selection } property="orientation" index="2" touch={ this.touch } />
-            <ControlClip model={ this.state.model } selection={ selection } touch={ this.touch } />
+            <br />
+
+            <div>Scene:</div>
+            <ModelSelector model={ this.state.model } selection={ this.state.selection } select={ this.select } />
+            <PositionControl type={ this.state.selection.type } value={ this.getSelectedProperty() } set={ this.setSelectedProperty.bind(this) } />
           </Col>
         </Row>
         <Row>
