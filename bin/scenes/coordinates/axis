@@ -1,0 +1,19 @@
+label: Coordinates
+position: [ 0, 0, 0 ]
+orientation: [ 0, 0, 0 ]
+items:
+- label: X
+  size: [ 1000, 1 ]
+  position: [ -500, 0, 0 ]
+  orientation: [ 0, 0, 0 ]
+  texture: /scenes/coordinates/axis.png
+- label: Y
+  size: [ 1000, 1 ]
+  position: [ -500, 0, 0 ]
+  orientation: [ 0, 90, 0 ]
+  texture: /scenes/coordinates/axis.png
+- label: Z
+  size: [ 1000, 1 ]
+  position: [ -500, 0, 0 ]
+  orientation: [ 0, 0, 90 ]
+  texture: /scenes/coordinates/axis.png

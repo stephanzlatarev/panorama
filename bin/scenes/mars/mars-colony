@@ -1,0 +1,21 @@
+label: Space Suit
+position: [ 300, 300, 0 ]
+orientation: [ 80, 0, 0 ]
+items:
+- label: Screen
+  size: [ 100, 100 ]
+  position: [ 0, 0, 0 ]
+  orientation: [ -120, 0, 0 ]
+  texture: /scenes/mars/mirror.jpeg
+  clip: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%)
+- label: Arm
+  size: [ 100, 100 ]
+  position: [ 0, 70, 0 ]
+  orientation: [ -80, 0, 0 ]
+  texture: /scenes/mars/linen.jpg
+  clip: polygon(21% 0%, 80% 0%, 100% 100%, 0% 100%)
+- label: Belt
+  size: [ 10, 100 ]
+  position: [ 0, 0, 0 ]
+  orientation: [ 234, 30, 10 ]
+  texture: /scenes/mars/metal.jpg
