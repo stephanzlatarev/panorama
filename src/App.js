@@ -38,9 +38,27 @@ export default class App extends React.Component {
       this.setState(this.state);
     }.bind(this));
 
-    $.get("/scenes/station/pod").done(function(data) {
-      this.state.model = require('js-yaml').safeLoad(data);
+    this.load("/scenes/station/pod", function(model) {
+      this.state.model = model;
       this.setState(this.state);
+    }.bind(this));
+  }
+
+  load(item, callback) {
+    var traverse = function(item) {
+      if (item.item) {
+        this.load(item.item, (model) => item.items = model.items);
+      } else if (item.items) {
+        for (var i in item.items) {
+          traverse(item.items[i]);
+        }
+      }
+    }.bind(this);
+
+    $.get(item).done(function(data) {
+      var model = require('js-yaml').safeLoad(data);
+      traverse(model);
+      callback(model);
     }.bind(this));
   }
 

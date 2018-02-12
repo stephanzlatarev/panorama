@@ -8,6 +8,11 @@ items:
   position: [ -50, -50, 0 ]
   orientation: [ 0, 90, 0 ]
   texture: /scenes/mars/mirror.jpeg
+- label: Table
+  size: [ 100, 100, 100 ]
+  position: [ 0, -100, 1 ]
+  orientation: [ 0, 0, 90 ]
+  item: /scenes/furniture/table-metal
 - label: Floor
   size: [ 100, 100, 100 ]
   position: [ 0, 0, 0 ]
