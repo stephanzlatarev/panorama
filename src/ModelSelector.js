@@ -35,7 +35,7 @@ export default class ModelSelector extends React.Component {
     var thisPathString = path.toString();
     var selectedPathString = this.props.selection.path.toString();
     var isSelectedAsItem = (thisPathString === selectedPathString);
-    var isSelectedAsParent = selectedPathString.startsWith(thisPathString);
+    var isSelectedAsParent = (selectedPathString.indexOf(thisPathString) === 0);
 
     var children = [];
     if (isSelectedAsParent && item.items) {
