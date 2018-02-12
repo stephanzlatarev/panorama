@@ -1,0 +1,20 @@
+label: Metal Table
+size: [ 100, 100, 100 ]
+position: [ 0, 0, 0 ]
+orientation: [ 0, 0, 0 ]
+items:
+- label: Plot
+  size: [ 100, 60 ]
+  position: [ -50, -30, 40 ]
+  orientation: [ 0, 0, 90 ]
+  texture: /scenes/furniture/metal.jpg
+- label: Leg
+  size: [ 40, 20 ]
+  position: [ -20, -10, 20 ]
+  orientation: [ 0, 90, 0 ]
+  texture: /scenes/furniture/metal.jpg
+- label: Foot
+  size: [ 40, 20 ]
+  position: [ -20, -10, 0 ]
+  orientation: [ 0, 0, 90 ]
+  texture: /scenes/furniture/metal.jpg
