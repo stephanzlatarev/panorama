@@ -1,7 +1,4 @@
 label: Floor
-size: [ 100, 100, 100 ]
-position: [ 0, 0, 0 ]
-orientation: [ 0, 0, 0 ]
 items:
 - label: Surface
   size: [ 1000, 1000 ]

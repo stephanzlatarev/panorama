@@ -7,7 +7,8 @@ export default class Viewer extends React.Component {
       display: 'block',
       position: 'absolute',
       transform: '',
-      transformStyle: 'preserve-3d'
+      transformStyle: 'preserve-3d',
+      backfaceVisibility: 'hidden'
     };
     var items = [];
 

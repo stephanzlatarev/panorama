@@ -3,16 +3,51 @@ size: [ 100, 100, 100 ]
 position: [ 0, 0, 0 ]
 orientation: [ 0, 0, 0 ]
 items:
-- label: Screen
-  size: [ 1000, 100 ]
-  position: [ -50, -50, 0 ]
-  orientation: [ 0, 90, 0 ]
-  texture: /scenes/mars/mirror.jpeg
+
+- label: Panel Wall 1
+  position: [ -170, -90, 125 ]
+  orientation: [ 0, 0, -60 ]
+  item: /scenes/station/panel-wall
+- label: Screen Wall 1
+  size: [ 700, 260 ]
+  position: [ -386, -431, 130 ]
+  orientation: [ -90, 60, 0 ]
+  texture: /scenes/nature/panorama-blue-mountains.jpg
+  clip: polygon(0% 0%, 30% 0%, 30% 100%, 0% 100%)
+
+- label: Panel Wall 2
+  position: [ 0, -190, 125 ]
+  orientation: [ 0, 0, 0 ]
+  item: /scenes/station/panel-wall
+- label: Screen Wall 2
+  size: [ 700, 260 ]
+  position: [ -315, -310, 130 ]
+  orientation: [ -90, 0, 0 ]
+  texture: /scenes/nature/panorama-blue-mountains.jpg
+  clip: polygon(30% 0%, 60% 0%, 60% 100%, 30% 100%)
+
+- label: Panel Wall 3
+  position: [ 170, -90, 125 ]
+  orientation: [ 0, 0, 60 ]
+  item: /scenes/station/panel-wall
+- label: Screen Wall 3
+  size: [ 700, 260 ]
+  position: [ -277, -368, 130 ]
+  orientation: [ -90, -60, 0 ]
+  texture: /scenes/nature/panorama-blue-mountains.jpg
+  clip: polygon(60% 0%, 90% 0%, 90% 100%, 60% 100%)
+
+- label: Panel Wall 5
+  position: [ 0, 190, 125 ]
+  orientation: [ 0, 0, 180 ]
+  item: /scenes/station/panel-wall
+
 - label: Table
   size: [ 100, 100, 100 ]
-  position: [ 0, -100, 1 ]
+  position: [ 0, -150, 1 ]
   orientation: [ 0, 0, 90 ]
   item: /scenes/furniture/table-metal
+
 - label: Floor
   size: [ 100, 100, 100 ]
   position: [ 0, 0, 0 ]

@@ -1,7 +1,5 @@
 label: Metal Table
-size: [ 100, 100, 100 ]
-position: [ 0, 0, 0 ]
-orientation: [ 0, 0, 0 ]
+description: Medium metal-plated table. Dimensions 100 x 60 x 40 
 items:
 - label: Plot
   size: [ 100, 60 ]
