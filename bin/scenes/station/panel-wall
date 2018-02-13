@@ -4,7 +4,7 @@ items:
   size: [ 220, 280 ]
   position: [ -110, -150, 0 ]
   orientation: [ 90, 0, 0 ]
-  texture: /texture/metal.jpg
+  texture: /texture/metal-aluminium-diamond-large.jpg
 - label: Interior
   size: [ 220, 280 ]
   position: [ -110, -130, 0 ]
