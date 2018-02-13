@@ -1,0 +1,75 @@
+label: Floor
+size: [ 100, 100, 100 ]
+position: [ 0, 0, 0 ]
+orientation: [ 0, 0, 0 ]
+items:
+- label: Surface
+  size: [ 1000, 1000 ]
+  position: [ -500, -500, 0 ]
+  orientation: [ 0, 0, 0 ]
+  texture: /scenes/garden/water-surface.png
+- label: Koi 1-1
+  size: [ 40, 70 ]
+  position: [ 100, 0, -14 ]
+  orientation: [ 0, 0, -50 ]
+  texture: /scenes/garden/koi-1.jpg
+- label: Koi 1-2
+  size: [ 40, 70 ]
+  position: [ -150, 91, -2 ]
+  orientation: [ 0, 0, 210 ]
+  texture: /scenes/garden/koi-1.jpg
+- label: Koi 1-3
+  size: [ 40, 70 ]
+  position: [ -200, 0, -20 ]
+  orientation: [ 0, 0, -80 ]
+  texture: /scenes/garden/koi-1.jpg
+- label: Koi 1-4
+  size: [ 40, 70 ]
+  position: [ 100, -300, -10 ]
+  orientation: [ 0, 0, 42 ]
+  texture: /scenes/garden/koi-1.jpg
+- label: Koi 4-1
+  size: [ 40, 70 ]
+  position: [ 50, 120, -22 ]
+  orientation: [ 0, 0, 230 ]
+  texture: /scenes/garden/koi-4.jpg
+- label: Koi 4-2
+  size: [ 40, 70 ]
+  position: [ 130, -280, -12 ]
+  orientation: [ 0, 0, 230 ]
+  texture: /scenes/garden/koi-4.jpg
+- label: Koi 4-3
+  size: [ 40, 70 ]
+  position: [ 50, -180, -2 ]
+  orientation: [ 0, 0, 180 ]
+  texture: /scenes/garden/koi-4.jpg
+- label: Koi 5-1
+  size: [ 40, 70 ]
+  position: [ 250, 220, -2 ]
+  orientation: [ 0, 0, 230 ]
+  texture: /scenes/garden/koi-5.jpg
+- label: Koi 5-2
+  size: [ 40, 70 ]
+  position: [ 250, -180, -22 ]
+  orientation: [ 0, 0, -60 ]
+  texture: /scenes/garden/koi-5.jpg
+- label: Koi 5-3
+  size: [ 40, 70 ]
+  position: [ -250, 100, -12 ]
+  orientation: [ 0, 0, 230 ]
+  texture: /scenes/garden/koi-5.jpg
+- label: Koi 5-4
+  size: [ 40, 70 ]
+  position: [ -50, -80, -2 ]
+  orientation: [ 0, 0, 30 ]
+  texture: /scenes/garden/koi-5.jpg
+- label: Koi 5-5
+  size: [ 40, 70 ]
+  position: [ -100, -180, -2 ]
+  orientation: [ 0, 0, 130 ]
+  texture: /scenes/garden/koi-5.jpg
+- label: Bottom
+  size: [ 1000, 1000 ]
+  position: [ -500, -500, -30 ]
+  orientation: [ 0, 0, 0 ]
+  texture: /scenes/garden/water-floor.png
