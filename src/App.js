@@ -1,12 +1,8 @@
 import React from 'react';
 
-import {Grid, Row, Col} from 'react-bootstrap';
-
+import Editor from './Editor';
+import Loader from './Loader';
 import Viewer from './Viewer';
-import ControlPointOfView from './ControlPointOfView';
-import ModelDescriptor from './ModelDescriptor';
-import ModelSelector from './ModelSelector';
-import PositionControl from './PositionControl';
 
 export default class App extends React.Component {
 
@@ -14,166 +10,94 @@ export default class App extends React.Component {
     super(props);
 
     this.state = {
+      scene: null,
       model: null,
-      selection: {
-        path: [],
-        property: 'label',
-        type: 'text'
-      },
-      coordinates: null,
-      eyes: {
-        position: [ 300, 300, 0 ],
-        orientation: [ 80, 0, 0 ]
-      }
+      orientation: null
     };
 
-    this.eyes = this.eyes.bind(this);
-    this.touch = this.touch.bind(this);
-    this.select = this.select.bind(this);
+    if (window.DeviceOrientationEvent) {
+      window.addEventListener("deviceorientation", this.onOrientationChange.bind(this));
+    }
   }
 
-  componentDidMount() {
-    $.get("/scenes/coordinates/axis").done(function(data) {
-      this.state.coordinates = require('js-yaml').safeLoad(data);
-      this.setState(this.state);
-    }.bind(this));
-
-    this.load("/scenes/boardroom/room", function(model) {
+  load(scene) {
+    new Loader().load(scene, function(model) {
+      console.log('loaded', model);
+      this.state.scene = scene;
       this.state.model = {
         label: 'Scene',
-        items: [
-          {
-            label: 'Beholder',
-            items: [ model ]
-          }
-        ]
+        position: [ 300, 300, 0 ],
+        orientation: [ 80, 0, 0 ],
+        items: [ {
+          label: 'Beholder',
+          items: [ model ]
+        } ]
       };
       this.setState(this.state);
     }.bind(this));
   }
 
-  load(item, callback) {
-    var traverse = function(item) {
-      if (item.item) {
-        this.load(item.item, (model) => item.items = model.items);
-      } else if (item.items) {
-        for (var i in item.items) {
-          traverse(item.items[i]);
-        }
+  getTool() {
+    if (window.location.hash && (window.location.hash.indexOf("#/edit/") === 0)) {
+      return 'edit';
+    } else {
+      return 'view';
+    }
+  }
+
+  getScene() {
+    if (window.location.hash && ((window.location.hash.indexOf("#/view/") === 0) || (window.location.hash.indexOf("#/edit/") === 0))) {
+      var scene = window.location.hash.substring(7);
+      if (scene.indexOf('@') > 0) {
+        scene = scene.substring(0, scene.indexOf('@'));
       }
-    }.bind(this);
-
-    $.get(item).done(function(data) {
-      var model = require('js-yaml').safeLoad(data);
-      traverse(model);
-      callback(model);
-    }.bind(this));
-  }
-
-  eyes(eyes) {
-    this.state.eyes = eyes;
-    this.setState(this.state);
-  }
-
-  touch(model) {
-    this.setState({
-      model: model
-    });
-  }
-
-  select(selection) {
-    this.state.selection = selection;
-    this.setState(this.state);
-  }
-
-  getView() {
-    var view = this.state.model;
-    if (this.state.selection.path.length) {
-      for (var s = 0; s < this.state.selection.path.length - 1; s++) {
-        view = view.items[this.state.selection.path[s]];
-      }
-    }
-    return view;
-  }
-
-  getSelection() {
-    var item = this.getSelectedItem();
-
-    return function() {
-      return item;
-    };
-  }
-
-  getSelectedItem() {
-    var item = this.state.model;
-
-    if (this.state.selection.path.length) {
-      item = this.getView().items[this.state.selection.path[this.state.selection.path.length - 1]];
-    }
-
-    if (!item.size) item.size = [ 100, 100, 100 ];
-    if (!item.position) item.position = [ 0, 0, 0 ];
-    if (!item.orientation) item.orientation = [ 0, 0, 0 ];
-
-    return item;
-  }
-
-  getSelectedProperty() {
-    var item = this.getSelectedItem();
-
-    if (this.state.selection.type === 'text') {
-      return item[this.state.selection.property];
-    } else if (this.state.selection.type === 'dimension') {
-      return item[this.state.selection.property][this.state.selection.axis];
+      return scene;
+    } else {
+      return 'boardroom/room';
     }
   }
 
-  setSelectedProperty(value) {
-    var item = this.getSelectedItem();
-
-    if (this.state.selection.type === 'text') {
-      item[this.state.selection.property] = value;
-    } else if (this.state.selection.type === 'dimension') {
-      item[this.state.selection.property][this.state.selection.axis] = value;
+  getOrientation() {
+    if (this.state.orientation) {
+      return this.state.orientation;
+    } else if (window.location.hash && (window.location.hash.indexOf("@") > 0)) {
+      return JSON.parse(window.location.hash.substring(window.location.hash.indexOf("@") + 1));
+    } else {
+      return [ 0, 0, 0 ];
     }
-    this.setState(this.state);
+  }
+
+  onOrientationChange(event) {
+    var orientation = [ event.gamma, event.beta, event.alpha ];
+    var delta = 0;
+    for (var i = 0; i < 3; i++) delta += Math.abs(orientation[i] - this.state.orientation[i]);
+
+    if (delta > 1) {
+      this.state.orientation = orientation;
+      this.setState(this.state);
+    }
   }
 
   render() {
-    if (!this.state.model || !this.state.coordinates) return null;
+    var tool = this.getTool();
+    var scene = this.getScene();
+    var orientation = this.getOrientation();
 
-    var view = this.getView();
-    var selection = this.getSelection();
+    console.log('render', tool, scene);
+    if (scene === this.state.scene) {
+      window.location.hash = '#/' + tool + '/' + scene + '@' + JSON.stringify(orientation);
 
-    var scene = {
-      label: 'Scene',
-      position: this.state.eyes.position,
-      orientation: this.state.eyes.orientation,
-      items: view.items.concat(this.state.coordinates.items)
+      if (tool === 'edit') {
+        return <Editor model={ this.state.model } />;
+      } else {
+        this.state.model.orientation = orientation;
+        return <Viewer model={ this.state.model } />;
+      }
+    } else {
+      this.load(scene);
+
+      return <div>Loading scene { scene }...</div>
     }
-    return (
-      <Grid>
-        <Row>
-          <Col sm={20}>
-            <Viewer model={ scene } />
-          </Col>
-
-          <Col sm={10}>
-            <div>Point of view:</div>
-            <ControlPointOfView eyes={ this.state.eyes } touch={ this.eyes } />
-            <br />
-
-            <ModelSelector model={ this.state.model } selection={ this.state.selection } select={ this.select } />
-            <PositionControl type={ this.state.selection.type } value={ this.getSelectedProperty() } set={ this.setSelectedProperty.bind(this) } />
-          </Col>
-        </Row>
-        <Row>
-          <Col sm={30}>
-            <ModelDescriptor model={ selection() } />
-          </Col>
-        </Row>
-      </Grid>
-    );
   }
 }
 

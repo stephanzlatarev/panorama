@@ -26,7 +26,7 @@ export default class Viewer extends React.Component {
 
     if (data.items) {
       for (var i in data.items) {
-        items.push(this.item(i, data.items[i]));
+        if (data.items[i]) items.push(this.item(i, data.items[i]));
       }
     }
 
