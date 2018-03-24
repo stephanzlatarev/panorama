@@ -1,0 +1,23 @@
+label: Room
+size: [ 100, 100, 100 ]
+position: [ 0, 0, 0 ]
+orientation: [ 0, 0, 0 ]
+items:
+
+- label: Screen 1
+  size: [100, 100, 50]
+  position: [ -170, -90, 285 ]
+  orientation: [ 0, 0, -60 ]
+  item: /scenes/boardroom/screen
+
+- label: Screen 2
+  size: [100, 100, 50]
+  position: [ 0, -190, 285 ]
+  orientation: [ 0, 0, 0 ]
+  item: /scenes/boardroom/screen
+
+- label: Screen 3
+  size: [100, 100, 50]
+  position: [ 170, -90, 285 ]
+  orientation: [ 0, 0, 60 ]
+  item: /scenes/boardroom/screen

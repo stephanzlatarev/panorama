@@ -46,8 +46,8 @@ export default class Viewer extends React.Component {
 
   render() {
     var perspective = Math.floor(Math.sqrt(
-      this.props.model.position.x * this.props.model.position.x +
-      this.props.model.position.y * this.props.model.position.y
+      this.props.model.position[0] * this.props.model.position[0] +
+      this.props.model.position[1] * this.props.model.position[1]
     ));
 
     var style = {

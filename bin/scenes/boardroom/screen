@@ -1,0 +1,7 @@
+label: Screen
+items:
+- label: Screen
+  size: [ 220, 280 ]
+  position: [ -110, -130, 0 ]
+  orientation: [ 270, 0, 0 ]
+  texture: /texture/metal-aluminium-diamond-large.jpg

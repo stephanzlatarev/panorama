@@ -97,9 +97,9 @@ export default class ModelSelector extends React.Component {
 
   render() {
     return (
-      <ul>
+      <div>
         { this.list(this.props.model, []) }
-      </ul>
+      </div>
     );
   }
 }

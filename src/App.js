@@ -38,8 +38,16 @@ export default class App extends React.Component {
       this.setState(this.state);
     }.bind(this));
 
-    this.load("/scenes/station/pod", function(model) {
-      this.state.model = model;
+    this.load("/scenes/boardroom/room", function(model) {
+      this.state.model = {
+        label: 'Scene',
+        items: [
+          {
+            label: 'Beholder',
+            items: [ model ]
+          }
+        ]
+      };
       this.setState(this.state);
     }.bind(this));
   }
@@ -155,7 +163,6 @@ export default class App extends React.Component {
             <ControlPointOfView eyes={ this.state.eyes } touch={ this.eyes } />
             <br />
 
-            <div>Scene:</div>
             <ModelSelector model={ this.state.model } selection={ this.state.selection } select={ this.select } />
             <PositionControl type={ this.state.selection.type } value={ this.getSelectedProperty() } set={ this.setSelectedProperty.bind(this) } />
           </Col>
