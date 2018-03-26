@@ -132,7 +132,7 @@ export default class Editor extends React.Component {
       <Grid>
         <Row>
           <Col sm={20}>
-            <Viewer model={ scene } />
+            <Viewer model={ scene } width={ 500 } height={ 500 } />
           </Col>
 
           <Col sm={10}>

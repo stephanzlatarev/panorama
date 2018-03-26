@@ -53,8 +53,8 @@ export default class Viewer extends React.Component {
     var style = {
       position: 'relative',
       perspective: perspective + 'px',
-      width: '100%',
-      height: '500px',
+      width: this.props.width + 'px',
+      height: this.props.height + 'px',
       overflow: 'hidden'
     };
 

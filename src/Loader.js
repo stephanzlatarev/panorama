@@ -1,8 +1,5 @@
 import React from 'react';
 
-import Editor from './Editor';
-import Viewer from './Viewer';
-
 export default class Loader {
 
   load(scene, callback) {

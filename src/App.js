@@ -10,24 +10,34 @@ export default class App extends React.Component {
     super(props);
 
     this.state = {
+      message: 'no device orientation',
       scene: null,
       model: null,
-      orientation: null
+      baseOrientation: [0, 0, 0],
+      orientation: null,
+      width: 600,
+      height: 500
     };
 
     if (window.DeviceOrientationEvent) {
       window.addEventListener("deviceorientation", this.onOrientationChange.bind(this));
+      this.state.message = 'device orientation listener registered';
     }
+  }
+
+  componentDidMount() {
+    this.state.width = $(window).width();
+    this.state.height = $(window).height();
+    this.setState(this.state);
   }
 
   load(scene) {
     new Loader().load(scene, function(model) {
-      console.log('loaded', model);
       this.state.scene = scene;
       this.state.model = {
         label: 'Scene',
         position: [ 300, 300, 0 ],
-        orientation: [ 80, 0, 0 ],
+        orientation: [ 0, 0, 0 ],
         items: [ {
           label: 'Beholder',
           items: [ model ]
@@ -38,23 +48,27 @@ export default class App extends React.Component {
   }
 
   getTool() {
-    if (window.location.hash && (window.location.hash.indexOf("#/edit/") === 0)) {
-      return 'edit';
-    } else {
-      return 'view';
+    if (window.location.hash) {
+      if (window.location.hash.indexOf("#/edit/") === 0) {
+        return 'edit';
+      } else if (window.location.hash.indexOf("#/vr/") === 0) {
+        return 'vr';
+      }
     }
+
+    return 'view';
   }
 
   getScene() {
-    if (window.location.hash && ((window.location.hash.indexOf("#/view/") === 0) || (window.location.hash.indexOf("#/edit/") === 0))) {
-      var scene = window.location.hash.substring(7);
-      if (scene.indexOf('@') > 0) {
-        scene = scene.substring(0, scene.indexOf('@'));
-      }
-      return scene;
-    } else {
-      return 'boardroom/room';
+    var scene = 'boardroom/room';
+    if (window.location.hash) {
+      var scene = window.location.hash.substring(this.getTool().length + 3);
     }
+
+    if (scene.indexOf('@') > 0) {
+      scene = scene.substring(0, scene.indexOf('@'));
+    }
+    return scene;
   }
 
   getOrientation() {
@@ -67,13 +81,33 @@ export default class App extends React.Component {
     }
   }
 
-  onOrientationChange(event) {
-    var orientation = [ event.gamma, event.beta, event.alpha ];
-    var delta = 0;
-    for (var i = 0; i < 3; i++) delta += Math.abs(orientation[i] - this.state.orientation[i]);
+  getOrientationText() {
+    var orientation = this.getOrientation();
+    return '[' + Math.round(orientation[0]) + ',' + Math.round(orientation[1]) + ',' + Math.round(orientation[2]) + ']';
+  }
 
+  onOrientationChange(event) {
+    if (!event || !event.alpha || !event.beta || !event.gamma) return;
+
+    var orientation = [ event.gamma, event.beta - 90 * Math.sign(event.gamma), event.alpha ];
+    var delta;
+    if (this.state.orientation) {
+      delta = 0;
+      for (var i = 0; i < 3; i++) delta += Math.abs(orientation[i] - this.state.orientation[i]);
+    } else {
+      delta = 100;
+    }
+
+    this.state.message = 'orientation: ' + this.getOrientationText() + ' delta: ' + delta;
     if (delta > 1) {
       this.state.orientation = orientation;
+      this.setState(this.state);
+    }
+  }
+
+  setBaseOrientation() {
+    if (this.state.orientation) {
+      this.state.baseOrientation = JSON.parse(JSON.stringify(this.state.orientation));
       this.setState(this.state);
     }
   }
@@ -83,20 +117,49 @@ export default class App extends React.Component {
     var scene = this.getScene();
     var orientation = this.getOrientation();
 
-    console.log('render', tool, scene);
     if (scene === this.state.scene) {
-      window.location.hash = '#/' + tool + '/' + scene + '@' + JSON.stringify(orientation);
+      window.location.hash = '#/' + tool + '/' + scene + '@' + this.getOrientationText();
 
       if (tool === 'edit') {
         return <Editor model={ this.state.model } />;
-      } else {
+      } else if (tool === 'view') {
         this.state.model.orientation = orientation;
-        return <Viewer model={ this.state.model } />;
+        return (
+          <div>
+            { this.state.message }
+            <hr />
+            <Viewer model={ this.state.model } width={ this.state.width } height={ this.state.height } />
+          </div>
+        );
+      } else if (tool === 'vr') {
+        this.state.model.orientation = orientation;
+        var left = JSON.parse(JSON.stringify(this.state.model));
+        left.position[0] += 10;
+        var right = JSON.parse(JSON.stringify(this.state.model));
+        right.position[0] -= 10;
+        return (
+          <table>
+            <tbody>
+              <tr>
+                <td>
+                  <Viewer model={ left } width={ this.state.width } height={ this.state.height / 2 } />
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <Viewer model={ right } width={ this.state.width } height={ this.state.height / 2 } />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        );
+      } else {
+        return <div>Unsupported tool { tool }...</div>
       }
     } else {
       this.load(scene);
 
-      return <div>Loading scene { scene }...</div>
+      return <div>Loading scene { scene }...</div>;
     }
   }
 }

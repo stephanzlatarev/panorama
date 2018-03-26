@@ -1,0 +1,7 @@
+label: TV set
+items:
+- label: Screen
+  size: [ 252, 145 ]
+  position: [ 0, 0, 0 ]
+  orientation: [ -90, 0, 0 ]
+  texture: /scenes/furniture/tv.jpg
