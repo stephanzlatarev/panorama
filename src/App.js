@@ -26,8 +26,8 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
-    this.state.width = $(window).width();
-    this.state.height = $(window).height();
+    this.state.width = $(window).width() - 1;
+    this.state.height = $(window).height() - 1;
     this.setState(this.state);
   }
 
@@ -36,12 +36,9 @@ export default class App extends React.Component {
       this.state.scene = scene;
       this.state.model = {
         label: 'Scene',
-        position: [ 300, 300, 0 ],
+        position: [ 0, 0, 0 ],
         orientation: [ 0, 0, 0 ],
-        items: [ {
-          label: 'Beholder',
-          items: [ model ]
-        } ]
+        items: [ model ]
       };
       this.setState(this.state);
     }.bind(this));
@@ -125,11 +122,7 @@ export default class App extends React.Component {
       } else if (tool === 'view') {
         this.state.model.orientation = orientation;
         return (
-          <div>
-            { this.state.message }
-            <hr />
-            <Viewer model={ this.state.model } width={ this.state.width } height={ this.state.height } />
-          </div>
+          <Viewer model={ this.state.model } width={ this.state.width } height={ this.state.height } />
         );
       } else if (tool === 'vr') {
         this.state.model.orientation = orientation;

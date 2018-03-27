@@ -45,23 +45,23 @@ export default class Viewer extends React.Component {
   }
 
   render() {
-    var perspective = Math.floor(Math.sqrt(
-      this.props.model.position[0] * this.props.model.position[0] +
-      this.props.model.position[1] * this.props.model.position[1]
-    ));
-
     var style = {
       position: 'relative',
-      perspective: perspective + 'px',
+      perspective: '800px',
+      margin: this.props.height + 'px ' + this.props.width + 'px',
+      left: -this.props.width + 'px',
       width: this.props.width + 'px',
+      top: -this.props.height + 'px',
       height: this.props.height + 'px',
       overflow: 'hidden'
     };
 
     return (
-      <section style={ style }>
-        { this.item(0, this.props.model) }
-      </section>
+      <div style={ { width: this.props.width + 'px', height: this.props.height + 'px', overflow: 'hidden' } }>
+        <section style={ style }>
+          { this.item(0, this.props.model) }
+        </section>
+      </div>
     );
   }
 }

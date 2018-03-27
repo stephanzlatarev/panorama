@@ -1,50 +1,45 @@
 label: Yard
 size: [ 100, 100, 100 ]
-position: [ -2000, -600, 0 ]
+position: [ -1750, -1750, 0 ]
 orientation: [ 0, 0, 0 ]
 items:
-- label: TV set
-  size: [ 100, 100, 100 ]
-  position: [ 2000, 400, 50 ]
-  orientation: [ 0, 0, 22 ]
-  item: /scenes/furniture/tv-set
 - label: South
-  size: [ 4032, 1336 ]
+  size: [ 4032, 3036 ]
   position: [ 0, 3616, 0 ]
   orientation: [ 90, 0, 180 ]
   texture: /scenes/miramonte/yard-01.jpg
 - label: SouthWest
-  size: [ 4032, 1336 ]
+  size: [ 4032, 3036 ]
   position: [ -2325, 2325, 0 ]
   orientation: [ 90, 45, 180 ]
   texture: /scenes/miramonte/yard-02.jpg
 - label: West
-  size: [ 4032, 1336 ]
+  size: [ 4032, 3036 ]
   position: [ -3616, 0, 0 ]
   orientation: [ 90, 90, 180 ]
   texture: /scenes/miramonte/yard-03.jpg
 - label: NorthWest
-  size: [ 4032, 1336 ]
+  size: [ 4032, 3036 ]
   position: [ -2325, -2325, 0 ]
   orientation: [ 90, 135, 180 ]
   texture: /scenes/miramonte/yard-04.jpg
 - label: North
-  size: [ 4032, 1336 ]
+  size: [ 4032, 3036 ]
   position: [ 0, -3616, 0 ]
   orientation: [ 90, 180, 180 ]
   texture: /scenes/miramonte/yard-05.jpg
 - label: NorthEast
-  size: [ 4032, 1336 ]
+  size: [ 4032, 3036 ]
   position: [ 2325, -2325, 0 ]
   orientation: [ 90, 225, 180 ]
   texture: /scenes/miramonte/yard-06.jpg
 - label: East
-  size: [ 4032, 1336 ]
+  size: [ 4032, 3036 ]
   position: [ 3616, 0, 0 ]
   orientation: [ 90, 270, 180 ]
   texture: /scenes/miramonte/yard-07.jpg
 - label: SouthEast
-  size: [ 4032, 1336 ]
+  size: [ 4032, 3036 ]
   position: [ 2325, 2325, 0 ]
   orientation: [ 90, 315, 180 ]
   texture: /scenes/miramonte/yard-08.jpg
