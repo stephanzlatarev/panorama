@@ -127,9 +127,9 @@ export default class App extends React.Component {
       } else if (tool === 'vr') {
         this.state.model.orientation = orientation;
         var left = JSON.parse(JSON.stringify(this.state.model));
-        left.position[0] += 10;
+        left.position[1] += 20;
         var right = JSON.parse(JSON.stringify(this.state.model));
-        right.position[0] -= 10;
+        right.position[1] -= 20;
         return (
           <table>
             <tbody>
